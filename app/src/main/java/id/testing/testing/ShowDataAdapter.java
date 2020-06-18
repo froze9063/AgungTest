@@ -1,6 +1,5 @@
 package id.testing.testing;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyAdapterHolder>{
+public class ShowDataAdapter extends RecyclerView.Adapter<ShowDataAdapter.ShowDataAdapterHolder>{
 
     private Context context;
     private ArrayList<QuestionModel> list;
     private MyInterface myInterface;
 
-    public MyAdapter(Context context, ArrayList<QuestionModel> list, MyInterface myInterface){
+    public ShowDataAdapter(Context context, ArrayList<QuestionModel> list, MyInterface myInterface){
         this.context = context;
         this.list = list;
         this.myInterface = myInterface;
@@ -28,33 +27,27 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyAdapterHolder>{
 
     @NonNull
     @Override
-    public MyAdapterHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_adapter,parent,false);
-        return new MyAdapterHolder(view);
+    public ShowDataAdapterHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_data,parent,false);
+        return new ShowDataAdapterHolder(view);
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull final MyAdapterHolder holder, final int position) {
-
-        holder.txtQuestion.setText("Pertanyaan "+(position + 1));
-
+    public void onBindViewHolder(@NonNull ShowDataAdapterHolder holder, final int position) {
         final QuestionModel qModel = list.get(position);
-        final String modelID = qModel.getId();
+        holder.txtQuestion.setText(qModel.getQuestion());
 
         holder.btnNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String text = holder.etQuestion.getText().toString().trim();
-                myInterface.onClick(1,modelID,text,position);
+                myInterface.onClick(1,qModel.getId(),"",position);
             }
         });
 
         holder.btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String text = holder.etQuestion.getText().toString().trim();
-                myInterface.onClick(2,modelID,text,position);
+                myInterface.onClick(2,qModel.getId(),"",position);
             }
         });
     }
@@ -69,17 +62,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyAdapterHolder>{
         notifyDataSetChanged();
     }
 
-    class MyAdapterHolder extends RecyclerView.ViewHolder {
+    class ShowDataAdapterHolder extends RecyclerView.ViewHolder {
 
         TextView txtQuestion;
-        EditText etQuestion;
         Button btnNo;
         Button btnYes;
 
-        public MyAdapterHolder(@NonNull View itemView) {
+        public ShowDataAdapterHolder(@NonNull View itemView) {
             super(itemView);
             txtQuestion = itemView.findViewById(R.id.txtQuestion);
-            etQuestion = itemView.findViewById(R.id.etQuestion);
             btnNo = itemView.findViewById(R.id.btnNo);
             btnYes = itemView.findViewById(R.id.btnYes);
         }

@@ -23,4 +23,12 @@
         android:text="SIMPAN DATA"
         />
 
+
+    <Button
+        android:id="@+id/btnShow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SHOW DATA"
+        />
+
 </LinearLayout>
